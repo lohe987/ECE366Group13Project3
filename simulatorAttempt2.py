@@ -75,7 +75,7 @@ def assemble(I,Nlines):
     for i in range(Nlines):
         fetch = I[i]
         print()
-        #print(fetch)
+        print(fetch)
         fetch = fetch.replace("R","")
         if (fetch[0:4] == "init"):
             fetch = fetch.replace("init ","")
@@ -271,7 +271,7 @@ def simulate(I,Nsteps):
 
 
 def main():
-    input_file = open("Part2MachineCode.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("Part1MachineCode.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
     Nsteps = 3          # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
