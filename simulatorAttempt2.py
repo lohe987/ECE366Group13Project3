@@ -187,26 +187,12 @@ def simulate(I,Nsteps):
             imm = int(fetch[1])
             Reg[R] = imm
             PC += 1
-        elif (fetch[0:4] == "addi"):
-            fetch = fetch.replace("addi ","")
-            fetch = fetch.split(",")
-            R = int(fetch[0])
-            imm = int(fetch[1])
-            Reg[R] = Reg[R] + imm
-            PC += 1
         elif (fetch[0:4] == "add "):
             fetch = fetch.replace("add ","")
             fetch = fetch.split(",")
             Rx = int(fetch[0])
             Ry = int(fetch[1])
             Reg[Rx] = Reg[Rx] + Reg[Ry]
-            PC += 1
-        elif (fetch[0:4] == "sub "):
-            fetch = fetch.replace("sub ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
-            Reg[Rx] = Reg[Rx] - Reg[Ry]
             PC += 1
         elif (fetch[0:4] == "xor "):
             fetch = fetch.replace("xor ","")
@@ -217,25 +203,21 @@ def simulate(I,Nsteps):
             PC += 1
         elif (fetch[0:4] == "load"):
             fetch = fetch.replace("load ","")
-            fetch = fetch.replace("(","")
-            fetch = fetch.replace(")","")
             fetch = fetch.split(",")
             Rx = int(fetch[0])
             Ry = int(fetch[1])
             Reg[Rx] = Memory[Ry]
             PC += 1
-        elif (fetch[0:4] == "stre"):
-            fetch = fetch.replace("stre ","")
-            fetch = fetch.replace("(","")
-            fetch = fetch.replace(")","")
+        elif (fetch[0:4] == "store"):
+            fetch = fetch.replace("store ","")
             fetch = fetch.split(",")
             Rx = int(fetch[0])
             Ry = int(fetch[1])
             Memory[Ry] = Reg[Rx]
             PC += 1
-        elif (fetch[0:4] == "slt0"):  # why "slt0" instead of "sltR0" ? 
+        elif (fetch[0:4] == "slt"):  # why "slt0" instead of "sltR0" ? 
                                     # --> because all the 'R' is deleted at fetch to make things simplier. 
-            fetch = fetch.replace("slt0 ","")
+            fetch = fetch.replace("slt ","")
             fetch = fetch.split(",")
             Rx = int(fetch[0])
             Ry = int(fetch[1])
@@ -244,21 +226,20 @@ def simulate(I,Nsteps):
             else:
                 Reg[0] = 0
             PC += 1
-        elif (fetch[0:4] == "bez0"):
-            fetch = fetch.replace("bez0 ","")
+        elif (fetch[0:4] == "beq"):
+            fetch = fetch.replace("beq ","")
             fetch = fetch.split(",")
-            imm = int(fetch[0])
-            if ( Reg[0] == 0):
-                PC = PC + imm
+            Rx = int(fetch[0])
+            Ry = int(fetch[1])
+            if ( Reg[Rx] == Reg[Ry]):
+                PC = PC + 2
             else:
                 PC += 1
         elif (fetch[0:4] == "jump"):
             fetch = fetch.replace("jump ","")
             fetch = fetch.split(",")
-            imm = int(fetch[0])
-            PC = PC + imm
-        elif(fetch[0:6] == "finish"):
-            finished = True
+            Rx = int(fetch[0])
+            PC = PC + Reg[Rx]
         if ( (DIC % Nsteps) == 0):
             print("Registers R0-R3: ", Reg)
             print("Memory: ",Memory)
