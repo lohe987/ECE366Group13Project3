@@ -219,7 +219,8 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            Memory[Ry] = Reg[Rx]
+            print("Ry",Ry)
+            Memory[Reg[Ry]] = Reg[Rx]
             PC += 1
         elif (fetch[0] == "100"):# slt                        
             #fetch = fetch.replace("slt ","")
@@ -248,15 +249,15 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
                 finished = True
             else:
                 PC = PC + Reg[Rx]
-        elif (fetch[0:1] == "11000"):# slr
+        elif (fetch[0] == "110" and fetch[1] == "00" ):# slr
             Rx = int(fetch[1],2)
             Reg[Rx] = Reg[Rx] >> 1
             PC = PC + 1
-        elif (fetch[0:1] == "11001"):# and
+        elif (fetch[0] == "110" and fetch[1] == "01" ):# and
             Rx = int(fetch[2],2)
             Reg[Rx] = Reg[Rx] & 1
             PC = PC + 1
-        elif (fetch[0:1] == "11011"):# not
+        elif (fetch[0] == "110" and fetch[1] == "11" ):# not
             Rx = int(fetch[2],2)
             Reg[Rx] = ~Reg[Rx]
             PC = PC + 1
@@ -272,7 +273,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 
 
 def main():
-    input_file = open("SampleCode1.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("SampleCode4.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
     Nsteps = 3          # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
