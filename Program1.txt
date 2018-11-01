@@ -1,4 +1,4 @@
-
+R
 init R0,1
 load R0,R0  #loads in the value of Q into the register
 init R1,0

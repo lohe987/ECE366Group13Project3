@@ -13,56 +13,56 @@ def disassemble(I,Nlines):
     for i in range(Nlines):
         fetch = I[i]
         print(fetch)
-        if(fetch[0:4]=="0101"):   # init
+        if(fetch[0:4]=="101"):   # init
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6] ,2)
             imm = int(fetch[6:8] ,2)
             if (fetch[6:8] == "11"):
                 imm = "-1"
             print("init R"+str(Rx) + ", " + str(imm))
-        elif(fetch[0:4]=="1000"):   # load
+        elif(fetch[0:4]=="000"):   # load
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6],2)
             Ry = int(fetch[6:8],2)
             print("load R" + str(Rx) +", R" + str(Ry) + "")
-        elif(fetch[0:4]=="0001"):   # store
+        elif(fetch[0:4]=="001"):   # store
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6],2)
             Ry = int(fetch[6:8],2)
             print("store R" + str(Rx) +", R" + str(Ry) + "")
-        elif(fetch[0:4]=="0010"):   # add
+        elif(fetch[0:4]=="010"):   # add
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6],2)
             Ry = int(fetch[6:8],2)
             print("add R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:4]=="0111"):   # xor
+        elif(fetch[0:4]=="111"):   # xor
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6],2)
             Ry = int(fetch[6:8],2)
             print("xor R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:4]=="1100"):   # slt
+        elif(fetch[0:4]=="100"):   # slt
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6],2)
             Ry = int(fetch[6:8],2)
             print("slt R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:4]=="1011"):   # beq
+        elif(fetch[0:4]=="011"):   # beq
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[4:6],2)
             Ry = int(fetch[6:8],2)
             print("beq R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:6]=="111010"):   # jump
+        elif(fetch[0:6]=="11010"):   # jump
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[6:8],2) 
             print("jump R" + str(Rx) )
-        elif(fetch[0:6]=="011000"):   # slr
+        elif(fetch[0:6]=="11000"):   # slr
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[6:8],2) 
             print("slr R" + str(Rx) )
-        elif(fetch[0:6]=="011001"):   # and
+        elif(fetch[0:6]=="11001"):   # and
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[6:8],2) 
             print("and R" + str(Rx) )
-        elif(fetch[0:6]=="111011"):   # not
+        elif(fetch[0:6]=="11011"):   # not
             fetch = fetch.replace(" ", "")
             Rx = int(fetch[6:8],2) 
             print("not R" + str(Rx) )
@@ -75,7 +75,7 @@ def assemble(I,Nlines):
     for i in range(Nlines):
         fetch = I[i]
         print()
-        print(fetch)
+        #print(fetch)
         fetch = fetch.replace("R","")
         if (fetch[0:4] == "init"):
             fetch = fetch.replace("init ","")
@@ -86,7 +86,7 @@ def assemble(I,Nlines):
                 imm = "11"
             else:
                 imm = imm
-            op = "0101"
+            op = "101"
             print(op + " " + R + " " + imm)
             
         elif (fetch[0:4] == "add "):
@@ -94,7 +94,7 @@ def assemble(I,Nlines):
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
             Ry = format(int(fetch[1]),"02b")
-            op = "0010"
+            op = "010"
             print(op + " " + Rx + " " + Ry)
 
         elif (fetch[0:4] == "xor "):
@@ -102,7 +102,7 @@ def assemble(I,Nlines):
             fetch = fetch.split(",")      
             Rx = format(int(fetch[0]),"02b")
             Ry = format(int(fetch[1]),"02b")
-            op = "0111"
+            op = "111"
             print(op + " " + Rx + " " + Ry)
             
         elif (fetch[0:4] == "load"):
@@ -112,7 +112,7 @@ def assemble(I,Nlines):
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
             Ry = format(int(fetch[1]),"02b")
-            op = "1000"
+            op = "000"
             print ( op + " " + Rx + " " + Ry)
             
         elif (fetch[0:5] == "store"):
@@ -122,14 +122,14 @@ def assemble(I,Nlines):
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
             Ry = format(int(fetch[1]),"02b")
-            op = "0001"
+            op = "001"
             print ( op + " " + Rx + " " + Ry)
         elif (fetch[0:4] == "slt "):  
             fetch = fetch.replace("slt ","")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
             Ry = format(int(fetch[1]),"02b")
-            op = "1100"
+            op = "100"
             print ( op + " " + Rx + " " + Ry)
             
         elif (fetch[0:4] == "beq "):
@@ -137,36 +137,36 @@ def assemble(I,Nlines):
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
             Ry = format(int(fetch[1]),"02b")
-            op = "1011"
+            op = "011"
             print(op + " " + Rx + " " + Ry)
             
         elif (fetch[0:4] == "jump"):
             fetch = fetch.replace("jump ","")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
-            op = "111010"
+            op = "11010"
             print(op + " " + Rx)
         elif(fetch[0:4] == "slr "):
             fetch = fetch.replace("slt ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
-            op = "011000"
+            op = "11000"
             print(op + " " + Rx)
         elif(fetch[0:4] == "and "):
             fetch = fetch.replace("and ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
-            op = "011001"
+            op = "11001"
             print(op + " " + Rx)
         elif(fetch[0:4] == "not "):
             fetch = fetch.replace("not ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
-            op = "111011"
+            op = "11011"
             print(op + " " + Rx)
 
 
-def simulate(I,Nsteps):
+def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
     print("ECE366 Fall 2018 ISA Design: Simulator")
     print()
     PC = 0              # Program-counter
@@ -179,67 +179,87 @@ def simulate(I,Nsteps):
         fetch = I[PC]
         DIC += 1
         print(fetch)
-        fetch = fetch.replace("R","")       # Delete all the 'R' to make things simpler
-        if (fetch[0:4] == "init"):
-            fetch = fetch.replace("init ","")
-            fetch = fetch.split(",")
-            R = int(fetch[0])
-            imm = int(fetch[1])
-            Reg[R] = imm
+        fetch = fetch.split(" ") # Delete all the spaces to make things simpler
+        if (fetch[0] == "101"): #init
+            #fetch = fetch.replace("init ","") dont need I think
+            #fetch = fetch.split(",")
+            Rx = int(fetch[1],2)
+            if (int(fetch[2] == "11")):
+                imm = -1
+            elif(int(fetch[2] == "10")):
+                imm = -2
+            else:
+                imm = int(fetch[2],2)
+            Reg[Rx] = imm
+            print(Reg[Rx])
             PC += 1
-        elif (fetch[0:4] == "add "):
-            fetch = fetch.replace("add ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
+        elif (fetch[0] == "010"): #add
+            #fetch = fetch.replace("add ","")
+            #fetch = fetch.split(",")
+            Rx = int(fetch[1],2)
+            Ry = int(fetch[2],2)
             Reg[Rx] = Reg[Rx] + Reg[Ry]
             PC += 1
-        elif (fetch[0:4] == "xor "):
-            fetch = fetch.replace("xor ","")
-            fetch = fetch.split(",")      
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
+        elif (fetch[0] == "111"):# xor
+            #fetch = fetch.replace("xor ","")
+            #fetch = fetch.split(",")      
+            Rx = int(fetch[1],2)
+            Ry = int(fetch[2],2)
             Reg[Rx] = Reg[Rx] ^ Reg[Ry]
             PC += 1
-        elif (fetch[0:4] == "load"):
-            fetch = fetch.replace("load ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
+        elif (fetch[0] == "000"):# load
+            #fetch = fetch.replace("load ","")
+            #fetch = fetch.split(",")
+            Rx = int(fetch[1],2)
+            Ry = int(fetch[2],2)
             Reg[Rx] = Memory[Ry]
             PC += 1
-        elif (fetch[0:4] == "store"):
-            fetch = fetch.replace("store ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
+        elif (fetch[0] == "001"):# store
+            #fetch = fetch.replace("store ","")
+            #fetch = fetch.split(",")
+            Rx = int(fetch[1],2)
+            Ry = int(fetch[2],2)
             Memory[Ry] = Reg[Rx]
             PC += 1
-        elif (fetch[0:4] == "slt"):  # why "slt0" instead of "sltR0" ? 
-                                    # --> because all the 'R' is deleted at fetch to make things simplier. 
-            fetch = fetch.replace("slt ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
+        elif (fetch[0] == "100"):# slt                        
+            #fetch = fetch.replace("slt ","")
+            #fetch = fetch.split(",")
+            Rx = int(fetch[1],2)
+            Ry = int(fetch[2],2)
             if( Reg[Rx] < Reg[Ry] ):
                 Reg[0] = 1
             else:
                 Reg[0] = 0
             PC += 1
-        elif (fetch[0:4] == "beq"):
-            fetch = fetch.replace("beq ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            Ry = int(fetch[1])
+        elif (fetch[0] == "011"):# beq
+            #fetch = fetch.replace("beq ","")
+            #fetch = fetch.split(",")
+            Rx = int(fetch[1],2)
+            Ry = int(fetch[2],2)
             if ( Reg[Rx] == Reg[Ry]):
                 PC = PC + 2
             else:
                 PC += 1
-        elif (fetch[0:4] == "jump"):
-            fetch = fetch.replace("jump ","")
-            fetch = fetch.split(",")
-            Rx = int(fetch[0])
-            PC = PC + Reg[Rx]
+        elif (fetch[0] == "110" and fetch[1] == "10" ):# jump
+            #fetch = fetch.replace("jump ","")
+            #fetch = fetch.split(",")
+            Rx = int(fetch[2],2)
+            if(Reg[Rx] == 0):
+                finished = True
+            else:
+                PC = PC + Reg[Rx]
+        elif (fetch[0:1] == "11000"):# slr
+            Rx = int(fetch[1],2)
+            Reg[Rx] = Reg[Rx] >> 1
+            PC = PC + 1
+        elif (fetch[0:1] == "11001"):# and
+            Rx = int(fetch[2],2)
+            Reg[Rx] = Reg[Rx] & 1
+            PC = PC + 1
+        elif (fetch[0:1] == "11011"):# not
+            Rx = int(fetch[2],2)
+            Reg[Rx] = ~Reg[Rx]
+            PC = PC + 1
         if ( (DIC % Nsteps) == 0):
             print("Registers R0-R3: ", Reg)
             print("Memory: ",Memory)
@@ -252,12 +272,12 @@ def simulate(I,Nsteps):
 
 
 def main():
-    input_file = open("Part1MachineCode.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("SampleCode1.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
     Nsteps = 3          # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
-    mode = 2            # 1 = Simulation 
+    mode = 1            # 1 = Simulation 
                         # 2 = disassembler
                         # 3 = assembler
     for line in input_file:
