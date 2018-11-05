@@ -13,58 +13,59 @@ def disassemble(I,Nlines):
     for i in range(Nlines):
         fetch = I[i]
         print(fetch)
-        if(fetch[0:4]=="101"):   # init
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6] ,2)
-            imm = int(fetch[6:8] ,2)
+        fetch = fetch.replace(" ", "")
+        if(fetch[0:3]=="101"):   # init
+            #fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5] ,2)
+            imm = int(fetch[5:7] ,2)
             if (fetch[6:8] == "11"):
                 imm = "-1"
             print("init R"+str(Rx) + ", " + str(imm))
-        elif(fetch[0:4]=="000"):   # load
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6],2)
-            Ry = int(fetch[6:8],2)
+        elif(fetch[0:3]=="000"):   # load
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5],2)
+            Ry = int(fetch[5:7],2)
             print("load R" + str(Rx) +", R" + str(Ry) + "")
-        elif(fetch[0:4]=="001"):   # store
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6],2)
-            Ry = int(fetch[6:8],2)
+        elif(fetch[0:3]=="001"):   # store
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5],2)
+            Ry = int(fetch[5:7],2)
             print("store R" + str(Rx) +", R" + str(Ry) + "")
-        elif(fetch[0:4]=="010"):   # add
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6],2)
-            Ry = int(fetch[6:8],2)
+        elif(fetch[0:3]=="010"):   # add
+          #  fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5],2)
+            Ry = int(fetch[5:7],2)
             print("add R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:4]=="111"):   # xor
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6],2)
-            Ry = int(fetch[6:8],2)
+        elif(fetch[0:3]=="111"):   # xor
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5],2)
+            Ry = int(fetch[5:7],2)
             print("xor R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:4]=="100"):   # slt
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6],2)
-            Ry = int(fetch[6:8],2)
+        elif(fetch[0:3]=="100"):   # slt
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5],2)
+            Ry = int(fetch[5:7],2)
             print("slt R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:4]=="011"):   # beq
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[4:6],2)
-            Ry = int(fetch[6:8],2)
+        elif(fetch[0:3]=="011"):   # beq
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[3:5],2)
+            Ry = int(fetch[5:7],2)
             print("beq R" + str(Rx) +", R" + str(Ry) )
-        elif(fetch[0:6]=="11010"):   # jump
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[6:8],2) 
+        elif(fetch[0:5]=="11010"):   # jump
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[5:7],2) 
             print("jump R" + str(Rx) )
-        elif(fetch[0:6]=="11000"):   # slr
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[6:8],2) 
+        elif(fetch[0:5]=="11000"):   # slr
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[5:7],2) 
             print("slr R" + str(Rx) )
-        elif(fetch[0:6]=="11001"):   # and
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[6:8],2) 
+        elif(fetch[0:5]=="11001"):   # and
+           # fetch = fetch.replace(" ", "")
+            Rx = int(fetch[5:7],2) 
             print("and R" + str(Rx) )
-        elif(fetch[0:6]=="11011"):   # not
-            fetch = fetch.replace(" ", "")
-            Rx = int(fetch[6:8],2) 
+        elif(fetch[0:5]=="11011"):   # not
+          #  fetch = fetch.replace(" ", "")
+            Rx = int(fetch[5:7],2) 
             print("not R" + str(Rx) )
         print()
 
@@ -174,7 +175,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
     PC = 0              # Program-counter
     DIC = 0
     Reg = [0,0,0,0]     # 4 registers, init to all 0
-    Memory = [0 for i in range(10)] # data memory, 10 spaces all init to 0.
+    Memory = [0 for i in range(200)] # data memory, 10 spaces all init to 0.
     print("******** Simulation starts *********")
     finished = False
     while(not(finished)):
@@ -275,12 +276,12 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 
 
 def main():
-    input_file = open("Part2ISACodeWOComments.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("SampleCode1.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
     Nsteps = 3          # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
-    mode = 3            # 1 = Simulation 
+    mode = 2            # 1 = Simulation 
                         # 2 = disassembler
                         # 3 = assembler
     for line in input_file:
