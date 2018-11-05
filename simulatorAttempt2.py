@@ -81,11 +81,13 @@ def assemble(I,Nlines):
             fetch = fetch.replace("init ","")
             fetch = fetch.split(",")
             R = format(int(fetch[0]),"02b")
-            imm = format(int(fetch[1]),"02b")
+            imm = format(int(fetch[1]))
             if (imm == "-1"):
                 imm = "11"
+            elif (imm == "-2"):
+                imm = "10"
             else:
-                imm = imm
+                imm = format(int(fetch[1]),"02b")
             op = "101"
             print(op + " " + R + " " + imm)
             
@@ -144,25 +146,25 @@ def assemble(I,Nlines):
             fetch = fetch.replace("jump ","")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]),"02b")
-            op = "11010"
+            op = "110 10"
             print(op + " " + Rx)
         elif(fetch[0:4] == "slr "):
             fetch = fetch.replace("slt ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
-            op = "11000"
+            op = "110 00"
             print(op + " " + Rx)
         elif(fetch[0:4] == "and "):
             fetch = fetch.replace("and ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
-            op = "11001"
+            op = "110 01"
             print(op + " " + Rx)
         elif(fetch[0:4] == "not "):
             fetch = fetch.replace("not ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
-            op = "11011"
+            op = "110 11"
             print(op + " " + Rx)
 
 
@@ -273,12 +275,12 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 
 
 def main():
-    input_file = open("SampleCode4.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("Part2ISACodeWOComments.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
     Nsteps = 3          # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
-    mode = 1            # 1 = Simulation 
+    mode = 3            # 1 = Simulation 
                         # 2 = disassembler
                         # 3 = assembler
     for line in input_file:
