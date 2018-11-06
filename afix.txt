@@ -1,0 +1,10 @@
+add R2, R2 
+add R2, R2 
+add R2, R2 
+add R0, R2 
+init R3, 0 
+init R3, 0  
+load R2, R3
+beq R2, R3 
+jump R0 
+jump R3 

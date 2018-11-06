@@ -150,7 +150,7 @@ def assemble(I,Nlines):
             op = "110 10"
             print(op + " " + Rx)
         elif(fetch[0:4] == "slr "):
-            fetch = fetch.replace("slt ", "")
+            fetch = fetch.replace("slr ", "")
             fetch = fetch.split(",")
             Rx = format(int(fetch[0]), "02b")
             op = "110 00"
@@ -175,7 +175,116 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
     PC = 0              # Program-counter
     DIC = 0
     Reg = [0,0,0,0]     # 4 registers, init to all 0
-    Memory = [0 for i in range(200)] # data memory, 10 spaces all init to 0.
+    Memory = [0 for i in range(110)] # data memory, 10 spaces all init to 0.
+    
+    Memory = ["0000000000001001",
+"0000000000010001",
+"0000000000000000",
+"0000000000000000",
+"0000000000000000",
+"0000000000000000",
+"0000000000000000",
+"0000000000000000",
+"1111000010000001",
+"1111000010000010",
+"1111000010000011",
+"1111000010000100",
+"1111000010000101",
+"1111000010000110",
+"1111000010000111",
+"1111000010001000",
+"1111000010001001",
+"1111000010001010",
+"1111000010001011",
+"1111000010001100",
+"1111000010001101",
+"1111000010001110",
+"1111000010001111",
+"1111000010010000",
+"1111000010010001",
+"1111000010010010",
+"1111000010010011",
+"1111000010010100",
+"1111000010010101",
+"1111000010010110",
+"1111000010010111",
+"1111000010011000",
+"1111000010011001",
+"1111000010011010",
+"1111000010011011",
+"1111000010011100",
+"1111000010011101",
+"1111000010011110",
+"1111000010011111",
+"1111000010100000",
+"1111000010100001",
+"1111000010100010",
+"1111000010100011",
+"1111000010100100",
+"1111000010100101",
+"1111000010100110",
+"1111000010100111",
+"1111000010101000",
+"1111000010101001",
+"1111000010101010",
+"1111000010101011",
+"1111000010101100",
+"1111000010101101",
+"1111000010101110",
+"1111000010101111",
+"1111000010110000",
+"1111000010110001",
+"1111000010110010",
+"1111000010110011",
+"1111000010110100",
+"1111000010110101",
+"1111000010110110",
+"1111000010110111",
+"1111000010111000",
+"1111000010111001",
+"1111000010111010",
+"1111000010111011",
+"1111000010111100",
+"1111000010111101",
+"1111000010111110",
+"1111000010111111",
+"1111000011000000",
+"1111000011000001",
+"1111000011000010",
+"1111000011000011",
+"1111000011000100",
+"1111000011000101",
+"1111000011000110",
+"1111000011000111",
+"1111000011001000",
+"1111000011001001",
+"1111000011001010",
+"1111000011001011",
+"1111000011001100",
+"1111000011001101",
+"1111000011001110",
+"1111000011001111",
+"1111000011010000",
+"1111000011010001",
+"1111000011010010",
+"1111000011010011",
+"1111000011010100",
+"1111000011010101",
+"1111000011010110",
+"1111000011010111",
+"1111000011011000",
+"1111000011011001",
+"1111000011011010",
+"1111000011011011",
+"1111000011011100",
+"1111000011011101",
+"1111000011011110",
+"1111000011011111",
+"1111000011100000",
+"1111000011100001",
+"1111000011100010",
+"1111000011100011",
+"1111000011100100"]
     print("******** Simulation starts *********")
     finished = False
     while(not(finished)):
@@ -194,21 +303,20 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             else:
                 imm = int(fetch[2],2)
             Reg[Rx] = imm
-            print(Reg[Rx])
             PC += 1
         elif (fetch[0] == "010"): #add
             #fetch = fetch.replace("add ","")
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            Reg[Rx] = Reg[Rx] + Reg[Ry]
+            Reg[Rx] = int(Reg[Rx]) + int(Reg[Ry])
             PC += 1
         elif (fetch[0] == "111"):# xor
             #fetch = fetch.replace("xor ","")
             #fetch = fetch.split(",")      
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            Reg[Rx] = Reg[Rx] ^ Reg[Ry]
+            Reg[Rx] = int(Reg[Rx]) ^ int(Reg[Ry])
             PC += 1
         elif (fetch[0] == "000"):# load
             #fetch = fetch.replace("load ","")
@@ -216,13 +324,14 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
             Reg[Rx] = Memory[Ry]
+            print(Reg[Rx])
             PC += 1
         elif (fetch[0] == "001"):# store
             #fetch = fetch.replace("store ","")
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            print("Ry",Ry)
+            print (Reg[Ry])
             Memory[Reg[Ry]] = Reg[Rx]
             PC += 1
         elif (fetch[0] == "100"):# slt                        
@@ -240,6 +349,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
+            
             if ( Reg[Rx] == Reg[Ry]):
                 PC = PC + 2
             else:
@@ -254,15 +364,15 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
                 PC = PC + Reg[Rx]
         elif (fetch[0] == "110" and fetch[1] == "00" ):# slr
             Rx = int(fetch[1],2)
-            Reg[Rx] = Reg[Rx] >> 1
+            Reg[Rx] = int(Reg[Rx]) >> 1
             PC = PC + 1
         elif (fetch[0] == "110" and fetch[1] == "01" ):# and
             Rx = int(fetch[2],2)
-            Reg[Rx] = Reg[Rx] & 1
+            Reg[Rx] = int(Reg[Rx]) & 1
             PC = PC + 1
         elif (fetch[0] == "110" and fetch[1] == "11" ):# not
             Rx = int(fetch[2],2)
-            Reg[Rx] = ~Reg[Rx]
+            Reg[Rx] = ~int(Reg[Rx])
             PC = PC + 1
         if ( (DIC % Nsteps) == 0):
             print("Registers R0-R3: ", Reg)
@@ -276,12 +386,12 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 
 
 def main():
-    input_file = open("SampleCode1.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("Part2MachineCode.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
-    Nsteps = 3          # How many cycle to run before output statistics
+    Nsteps = 1         # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
-    mode = 2            # 1 = Simulation 
+    mode = 1            # 1 = Simulation 
                         # 2 = disassembler
                         # 3 = assembler
     for line in input_file:
