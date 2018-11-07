@@ -386,7 +386,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 
 
 def main():
-    input_file = open("Part2MachineCode.txt","r")#Part2ISACodeWOComments Part2MachineCode
+    input_file = open("Part2.2.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
     Nsteps = 1         # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
