@@ -323,7 +323,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            Reg[Rx] = Memory[Ry]
+            Reg[Rx] = Memory[Reg[Ry]]
             print(Reg[Rx])
             PC += 1
         elif (fetch[0] == "001"):# store
@@ -371,8 +371,8 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             Reg[Rx] = int(Reg[Rx]) & 1
             PC = PC + 1
         elif (fetch[0] == "110" and fetch[1] == "11" ):# not
-            Rx = int(fetch[2],2)
-            Reg[Rx] = ~int(Reg[Rx])
+            Rx = int(fetch[2],base=2)
+            Reg[Rx] = format(1111111111111111 - int(Reg[Rx]), '016')
             PC = PC + 1
         if ( (DIC % Nsteps) == 0):
             print("Registers R0-R3: ", Reg)
@@ -388,7 +388,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 def main():
     input_file = open("Part2.2.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
-    Nsteps = 1         # How many cycle to run before output statistics
+    Nsteps = 1          # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
     mode = 1            # 1 = Simulation 
