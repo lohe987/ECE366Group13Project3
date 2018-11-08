@@ -180,7 +180,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
     Memory = ["0000000000001001",
 "0000000000010001",
 "0000000000000000",
-"0000000000000000",
+"0000000000000000",#target
 "0000000000000000",
 "0000000000000000",
 "0000000000000000",
@@ -324,7 +324,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
             Reg[Rx] = Memory[Reg[Ry]]
-            print(Reg[Rx])
+            #print(Reg[Rx])
             PC += 1
         elif (fetch[0] == "001"):# store
             #fetch = fetch.replace("store ","")
@@ -339,7 +339,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            if( Reg[Rx] < Reg[Ry] ):
+            if( int(Reg[Rx]) < int(Reg[Ry]) ):
                 Reg[0] = 1
             else:
                 Reg[0] = 0
@@ -363,15 +363,18 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             else:
                 PC = PC + Reg[Rx]
         elif (fetch[0] == "110" and fetch[1] == "00" ):# slr
-            Rx = int(fetch[1],2)
-            Reg[Rx] = int(Reg[Rx]) >> 1
+            Rx = int(fetch[2],2)
+            Reg[Rx] = format(int(Reg[Rx],2) >> 1, '016b')
+            print(Reg[Rx])
+            #finished = True
             PC = PC + 1
         elif (fetch[0] == "110" and fetch[1] == "01" ):# and
             Rx = int(fetch[2],2)
             Reg[Rx] = int(Reg[Rx]) & 1
+            #finished = True
             PC = PC + 1
         elif (fetch[0] == "110" and fetch[1] == "11" ):# not
-            Rx = int(fetch[2],base=2)
+            Rx = int(fetch[2],2)
             Reg[Rx] = format(1111111111111111 - int(Reg[Rx]), '016')
             PC = PC + 1
         if ( (DIC % Nsteps) == 0):
@@ -388,7 +391,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 def main():
     input_file = open("Part2.2.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
-    Nsteps = 1          # How many cycle to run before output statistics
+    Nsteps = 1000         # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
     mode = 1            # 1 = Simulation 

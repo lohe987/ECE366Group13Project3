@@ -1,0 +1,89 @@
+﻿Init r1, 1
+
+
+Not r2
+Not r2
+Not r2
+Not r2
+Not r2
+Not r2
+
+
+Loop:
+Add r1, r1
+Init r2, 0
+Add r2, r1
+Add r2, r1
+Add r2, r1
+Init r3, 1        #used to move from memory to memory
+Load r0, r3        #r0 = M[1] r0=Q
+Add r3, r3        #r3 = 2
+Store r2, r3        #M[2] = r2
+Init r1, 0
+Add r1, r0        #r1 is also Q now
+
+
+Mod:
+Init r3, 1
+Add r3, r3        #r3 = 2
+Add r3, r3        #r3 = 4
+Add r3, r3        #r3 = 8
+Init r0, 1
+Add r0, r0
+Add r3,r0         #r3= 10
+Init r0,1
+Add r3, r0        #r3=11
+Not r3
+Not r3
+Slt r2, r1        #r2<r1 then r0 = 1
+Init r1, 0
+Beq r1, r0        #stuck here idk how to make it jump back to mod without 
+Jump r3
+Init r1, 1
+Load r1, r1        #r1 = Q again
+Not r1                #makes Q negative so we can use Add
+Add r2, r1        #gets remainder
+Init r0, 1
+Add r0, r0
+Store r2
+Not r1
+Not r3
+Jump r3
+Not r3
+Not r3
+Not r3
+
+
+Out:
+Init r1, 0
+Load r3, r1        #r3=P
+Add r1, r2
+Init r0, 1
+Not r0
+Add r3, r0
+Init r2, 1
+Add r2, r2
+Add r2, r2
+Add r2, r2
+Add r2, r2
+Add r2, r2
+Add r2, r2
+Slt r3, r0        #r3<r0 if true r0=1
+Init r3, 0
+Beq r3, r0
+Jump r2
+Init r0, 1
+Jump r0
+
+
+End:
+Init r0, 1
+Add r0, r0
+Store r2, r0
+
+
+
+
+Dead:
+Init r0, 0
+Jump r0        #jumps infinitely to make it end
