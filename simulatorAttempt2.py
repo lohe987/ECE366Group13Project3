@@ -324,14 +324,14 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
             Reg[Rx] = Memory[Reg[Ry]]
-            #print(Reg[Rx])
+            print(Reg[Rx])
             PC += 1
         elif (fetch[0] == "001"):# store
             #fetch = fetch.replace("store ","")
             #fetch = fetch.split(",")
             Rx = int(fetch[1],2)
             Ry = int(fetch[2],2)
-            print (Reg[Ry])
+            #print (Reg[Ry])
             Memory[Reg[Ry]] = Reg[Rx]
             PC += 1
         elif (fetch[0] == "100"):# slt                        
@@ -391,7 +391,7 @@ def simulate(I,Nsteps): #NEEDS TO BE DONE IN MACHINE CODE!!!
 def main():
     input_file = open("Part2.2.txt","r")#Part2ISACodeWOComments Part2MachineCode
     debug_mode = False  # is machine in debug mode?  
-    Nsteps = 1000         # How many cycle to run before output statistics
+    Nsteps = 20000         # How many cycle to run before output statistics
     Nlines = 0          # How many instrs total in input.txt  
     Instruction = []    # all instructions will be stored here
     mode = 1            # 1 = Simulation 
