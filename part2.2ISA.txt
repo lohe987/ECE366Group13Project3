@@ -27,8 +27,6 @@ init R2, 0
 add R2, R3 
 add R3, R1 
 add R3, R0
-init R0, 1
-add R3, R0
 init R0, 0
 store R3, R0 
 

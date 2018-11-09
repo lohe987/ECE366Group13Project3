@@ -1,0 +1,69 @@
+#P01
+
+init r0, 1
+init r1, 1
+add r0, r0
+add r0, r0
+add r1, r1
+add r0, r1#6
+add r1, r1#4
+add r1, r1#8
+add r1, r1#16
+add r1, r1#32
+init r2, -1
+add r1, r2
+store r1, r0 #stores 32 into M[6]
+init r0, 1
+init r1, 1
+add r0, r0
+add r0, r0
+add r1, r1
+add r0, r1 #r0 = 6
+add r1, r1
+store r0, r1 #M[4] = 6
+
+init r1, 1
+add r1, r1
+add r1, r1
+load r0, r1 #loads M[4]
+add r0, r0 # M[4]*2
+init r2, 0
+add r2, r0
+add r0, r0 # M[4]*4
+add r0, r2 # M[4]*6
+store r0, r1 #M[4]=M[4] *6
+init r0, -1
+init r2, 1
+add r2, r2#2
+add r2, r2#4
+init r3, 1
+add r3, r3
+add r2, r3#6
+load r1, r2
+add r1, r0 #decrement power by 1
+store r1, r2 #store decremented power back
+init r0, -2
+init r3, 0
+add r0, r0#-4
+add r0, r0#-8
+add r3, r0
+add r0, r0#-16
+add r0, r3#-24
+add r0, r3#-32
+init r2, 0
+init r2, 0
+init r2, 0
+beq r1, r2
+jump r0
+jump r2
+
+
+
+
+
+
+ 
+
+
+
+

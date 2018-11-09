@@ -1,0 +1,76 @@
+init R1, 1
+
+not R2
+not R2
+not R2
+not R2
+not R2
+not R2
+
+add R1, R1
+init R2, 0
+add R2, R1
+add R2, R1
+add R2, R1
+init R3, 1        
+load R0, R3       
+add R3, R3        
+store R2, R3      
+init R1, 0
+add R1, R0 
+
+init R3, 1
+add R3, R3
+add R3, R3
+add R3, R3
+init R0, 1
+add R0, R0
+add R3, R0 
+init R0, 1
+add R3, R0
+not R3
+not R3
+slt R2, R1
+init R1, 0
+beq R1, R0 
+jump R3
+init R1, 1
+load R1, R1
+not R1     
+add R2, R1 
+init R0, 1
+add R0, R0
+store R2, R0
+not R1
+not R3
+jump R3
+not R3
+not R3
+not R3
+
+init R1, 0
+load R3, R1        
+add R1, R2
+init R0, 1
+not R0
+add R3, R0
+init R2, 1
+add R2, R2
+add R2, R2
+add R2, R2
+add R2, R2
+add R2, R2
+add R2, R2
+slt R3, R0       
+init R3, 0
+beq R3, R0
+jump R2
+init R0, 1
+jump R0
+
+init R0, 1
+add R0, R0
+store R2, R0
+
+init R0, 0
+jump R0       
